@@ -26,6 +26,7 @@ class Gui(ttk.Frame):
         self.accuracy_svm="-"
         self.accuracy_mlp="-"
         self.filename=None
+        self.introduction()
 
     def create_widgets(self):
 
@@ -92,7 +93,7 @@ class Gui(ttk.Frame):
 
         self.summarylabel = Label(self.subframesummaryforlabel,text="=========Summary=========")
         self.summarylabel.grid(column=0,row=1,sticky=(tk.N, tk.W, tk.E, tk.S),pady=(5,0),padx=(0,0))
-        self.summaryscrolltext = tkst.ScrolledText(self.subframesummaryforsum,width=23,height=13,state=tk.DISABLED)
+        self.summaryscrolltext = tkst.ScrolledText(self.subframesummaryforsum,width=23,height=33,state=tk.DISABLED)
         self.summaryscrolltext.grid(column=0,row=2,sticky=(tk.N, tk.W, tk.E, tk.S))
 
 
@@ -130,7 +131,7 @@ class Gui(ttk.Frame):
         self.workspace = ttk.Frame(self.mainframe,padding="0 0 0 0")
         self.workspace.grid(column=3, row=1, sticky=(tk.N, tk.W, tk.E, tk.S))
 
-        self.scrolltext = tkst.ScrolledText(self.workspace, width=50, height=25, borderwidth = 5, relief = "sunken",state=tk.DISABLED)
+        self.scrolltext = tkst.ScrolledText(self.workspace, width=100, height=50, borderwidth = 5, relief = "sunken",state=tk.DISABLED)
         self.scrolltext.grid(column=3, row = 1, sticky=(tk.N, tk.W, tk.E, tk.S))
 
         
@@ -293,6 +294,7 @@ class Gui(ttk.Frame):
         self.filename = filedialog.askopenfilename(initialdir = ".",title = "Select file",filetypes = (("csv files","*.csv"),("all files","*.*")))
         self.log_history("Reading "+self.filename)
         if(self.bagging.read_dataset(self.filename)):
+            self.log_history("", clear=True)
             self.log_history("Dataset loaded successfully.....")
             self.btnRun.configure(state=True)
             filename_w_ext = os.path.basename(self.filename)
@@ -308,3 +310,32 @@ class Gui(ttk.Frame):
         else:
             self.log_history("Error while loading data!")
         
+    def introduction(self):
+        self.log_history("Welcome to MLP and SVM Bootstrap Bagging Software!")
+        self.log_history("v0.1 Alpha")
+        self.log_history("      `````````                                                                                    ")
+        self.log_history("      `:+mNh+/+ohh+.                          `.             ``                                    ")
+        self.log_history("        `dNo    `oNN.                        `:m           `.y+                                    ")
+        self.log_history("        `dNo    `+NN-  `.+++s+-   `./o+oo- `:sNm++-.++/++/.+dNy++-/s::ss-./o+oo: `-/s:-oss/`       ")
+        self.log_history("        `dNy+++oymy-  `om:   oNy``/m+   /md. .Nm  `yh   /s `oN+ `-yNh::o:dN. `yN/`-hNy+-:yNm-      ")
+        self.log_history("        `dmo  `.:ymh:`/mh    `yms-mm    `omh .mm   omho:`` `om+  `om+    -:./+ymo `sm+   `ymy      ")
+        self.log_history("        `hm+     `hmm`omd    `oms:mm`   `/mh .mm  ` `/sdmy``om+  `om/   `+h+.`om+ `sm+   `+my      ")
+        self.log_history("        `hm+   ``:dmo `hm+  ``yh.`sms   `od- .md``-y.  `om/`om+`.`om+   /my``.sm+`.om+  ``yd.      ")
+        self.log_history("      `:/yys++++os+.    /ys++o/`   :ss+/++`   +hy+.sy+//o/  .yho/:sys:` `ohyo//hy/.ody+//o+`       ")
+        self.log_history("                                                                                  `od/             ")
+        self.log_history("                                                                                 `.sd+`            ")
+        self.log_history("                                                                                 `.---.`           ")
+        self.log_history("                                                            ``.                                    ")
+        self.log_history("           `:+hhy++osyo-                                    `dN/                                   ")
+        self.log_history("             `mN+    .hNd`                                    `                                    ")
+        self.log_history("             `mN+    `/NN- ``:+++:`   `.:///.``` ``:///-`````-/.``./:`-++:    `-///:```            ")
+        self.log_history("             `mNs:-:/omh/  .dm. -mm. `+m+  :mNs+`/ms  -mNyo./mN: :yNdo//sNy `.hd. `yNdo-           ")
+        self.log_history("             `dNo---/odho. `+/`-/dm: `mm.  `hm/ `hm/  `oms  `hm:  /my   .mm  +my  `-mm             ")
+        self.log_history("             `dm+     .dmd``/so:.ym:  /dy.`:ds`  -hh-`-hy.  `ym:  :my   .mm  `sm/`.sd/             ")
+        self.log_history("             `dm/    `-dmy`+mo ``ym: `:s:::-`   `-s/:::.    `ym: `:ms   .mm  `+o:::-               ")
+        self.log_history("           `:+ddy+++oshs:  -ddso+ymy+`oddhhhhyo. /ddhhhhys-.:hdo::sdh:.-+dd/.-hdhhhhys/            ")
+        self.log_history("                             ``   ` `-s- ````-+s.o/  ```.:h                 `/s` ```.-y-           ")
+        self.log_history("                                     odo/:::/++`/ds/::::++.                 .hy+::::/+/            ")
+        self.log_history("                                      `-://:-`   `-://:-`                     .:///:.              ")                                                                                           
+        self.log_history("To start the bagging, just click the 'Open File' button, choose the .csv dataset, and run!")
+        self.log_history("This is still an Alpha version.")
