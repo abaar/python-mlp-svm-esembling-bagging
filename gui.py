@@ -12,6 +12,8 @@ from bagging import bagging
 class Gui(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
+        master.resizable(False,False)
+        # master.resizeable(False,False)
         self.pack()
         self.create_widgets()
         self.dataset=None
@@ -33,6 +35,7 @@ class Gui(ttk.Frame):
 
         self.mainframe = ttk.Frame(self)
         self.mainframe.grid(column=0, row=0, sticky=(tk.N, tk.W, tk.E, tk.S))
+
         # self.mainframe.columnconfigure(0, weight=1)
         # self.mainframe.rowconfigure(0, weight=1)
 
@@ -93,7 +96,7 @@ class Gui(ttk.Frame):
 
         self.summarylabel = Label(self.subframesummaryforlabel,text="=========Summary=========")
         self.summarylabel.grid(column=0,row=1,sticky=(tk.N, tk.W, tk.E, tk.S),pady=(5,0),padx=(0,0))
-        self.summaryscrolltext = tkst.ScrolledText(self.subframesummaryforsum,width=23,height=33,state=tk.DISABLED)
+        self.summaryscrolltext = tkst.ScrolledText(self.subframesummaryforsum,borderwidth='5',width=23,height=18,state=tk.DISABLED,relief='sunken')
         self.summaryscrolltext.grid(column=0,row=2,sticky=(tk.N, tk.W, tk.E, tk.S))
 
 
@@ -131,7 +134,7 @@ class Gui(ttk.Frame):
         self.workspace = ttk.Frame(self.mainframe,padding="0 0 0 0")
         self.workspace.grid(column=3, row=1, sticky=(tk.N, tk.W, tk.E, tk.S))
 
-        self.scrolltext = tkst.ScrolledText(self.workspace, width=100, height=50, borderwidth = 5, relief = "sunken",state=tk.DISABLED)
+        self.scrolltext = tkst.ScrolledText(self.workspace, width=100, height=30, borderwidth = 5, relief = "sunken",state=tk.DISABLED)
         self.scrolltext.grid(column=3, row = 1, sticky=(tk.N, tk.W, tk.E, tk.S))
 
         
