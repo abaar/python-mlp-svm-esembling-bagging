@@ -29,6 +29,9 @@ class bagging:
 		self.__accuray = None
 		self.__average_of_all_predicts=[]
 		self.__intended_output=None
+		self.__svm_only=None
+		self.__mlp_only=None
+
 
 	def reset(self):
 		print("Reset")
@@ -73,9 +76,29 @@ class bagging:
 		for i in range(0,svm_models):
 			self.__svm.append(SVC(kernel='linear'))
 		for i in range(0,mlp_models):
-			self.__mlp.append(MLPClassifier(hidden_layer_sizes=(13,13,13), max_iter=10000))
+			self.__mlp.append(MLPClassifier(hidden_layer_sizes=(13,13,13), max_iter=500))
 
 		self.__state="model_added"
+
+	def get_len_of_svm_model(self):
+		return len(self.__svm_part)
+
+	def get_len_of_mlp_model(self):
+		return len(self.__mlp_part)
+
+	def train_svm_data(self,idx):
+		if(idx>len(self.__svm_part)):
+			return False
+		bag_idx=self.__svm_part[idx]
+		self.__svm[idx].fit(self.__x_train_bags[bag_idx],self.__y_train_bags[bag_idx])
+		return True
+
+	def train_mlp_data(self,idx):
+		if(idx>len(self.__mlp_part)):
+			return False
+		bag_idx=self.__mlp_part[idx]
+		self.__mlp[idx].fit(self.__x_train_bags[bag_idx],self.__y_train_bags[bag_idx])
+		return True
 
 	def train_data(self, svm_models=None, mlp_models=None,log=None):
 		if(svm_models==None and mlp_models==None):
@@ -179,3 +202,17 @@ class bagging:
 		# print(self.__average_of_all_predicts)
 		# print(self.__y_test_original)
 		return (metrics.accuracy_score(self.__average_of_all_predicts,self.__y_test_original))
+
+
+	def getSvmOnly(self):
+		self.__svm_only=SVC(kernel='linear')
+		self.__svm_only.fit(self.__x_train_original,self.__y_train_original)
+		predict=self.__svm_only.predict(self.__x_test_original)
+		return metrics.accuracy_score(predict,self.__y_test_original)
+
+
+	def getMlpOnly(self):
+		self.__mlp_only=MLPClassifier(hidden_layer_sizes=(13,13,13), max_iter=500)
+		self.__mlp_only.fit(self.__x_train_original,self.__y_train_original)
+		predict=self.__mlp_only.predict(self.__x_test_original)
+		return metrics.accuracy_score(predict,self.__y_test_original)
